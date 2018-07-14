@@ -4,7 +4,7 @@ import java.util.List;
 
 import pojo.Student;
 
-public interface StudentService {
+public interface IStudentService {
 	
 	/**
 	 *  获取所有学生
@@ -38,4 +38,11 @@ public interface StudentService {
 	 * 通过id获取一个学生信息 
 	 */
 	public Student getStudentById(int id);
+	
+	/**
+	 * 根据id或者name查询学生
+	 * @param idOrName
+	 * @return
+	 */
+	public List<Student> getStudentsByIdOrName(String idOrName);
 }
