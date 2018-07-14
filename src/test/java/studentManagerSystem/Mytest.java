@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pojo.Student;
-import service.StudentService;
+import service.IStudentService;
 
 
 //使用junit4进行测试
@@ -21,7 +21,7 @@ public class Mytest extends AbstractJUnit4SpringContextTests{
 	
 
 	@Autowired
-	private StudentService studentService;
+	private IStudentService studentService;
 	
 	@Test
 	public void t1() throws Exception {

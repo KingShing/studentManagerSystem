@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
    <mapper namespace="dao.StudentDao">
-   
+   		<!-- 主键查询 -->
 	   	<select id="getStudentById" resultType="Student" parameterType="int">
 	   		SELECT * FROM student WHERE id=#{id}
 	   	</select>
@@ -13,7 +13,7 @@
 	   	</select>
 	   	
 	   	<insert id="addStudent" parameterType="Student">
-	   		INSERT USER(id,name,age,address,sex,image) VALUE (#{id},#{name},#{age},#{address},#{sex},#{image})
+	   		INSERT student(id,name,age,address,sex,image) VALUE (#{id},#{name},#{age},#{address},#{sex},#{image})
 	   	</insert>
 	   	
 	   	<delete id="removeStudentById" parameterType="int">
@@ -24,4 +24,12 @@
 	   		UPDATE student SET id = #{id} , name = #{name},age=#{age},address=#{address},sex=#{sex},image=#{image}
 			WHERE id = #{id}
 	   	</update>
+	   	
+	   	
+	   	<!-- 模糊查询 -->
+	   	<select id="getStudentsByName" parameterType="string" resultType="Student">
+	   		SELECT * FROM student WHERE name = #{name}
+	   	</select>
+	   	
+	   	
    </mapper>

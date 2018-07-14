@@ -40,4 +40,15 @@ public interface StudentDao {
 	 * @return boolean
 	 */
 	public boolean addStudent(Student student);
+	
+	
+	//-----------模糊查询--------------------
+	/**
+	 *  根据name查询
+	 * @param Name
+	 * @return
+	 */
+	public List<Student> getStudentsByName(String Name);
+		
+	
 }

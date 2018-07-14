@@ -14,20 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pojo.Student;
-import service.StudentService;
+import service.IStudentService;
 
 
 @Controller
 public class StudentController {
 	
 	@Autowired
-	private StudentService studentService;
+	private IStudentService studentService;
 	
 	@RequestMapping(value="/students.do")
 	public @ResponseBody List<Student> listAllStu(){
 		List<Student> list = studentService.getAllStudents();
 		return list;
 	}
+	
+	@RequestMapping(value="/likeStudent.do")
+	public @ResponseBody List<Student> likeStudent(String idOrName){
+		System.out.println("idOrName"+idOrName);
+		return studentService.getStudentsByIdOrName(idOrName);
+	}
+	
 	
 	@RequestMapping(value="/student.do")
 	public @ResponseBody Student getStuById(String id){
@@ -38,24 +45,39 @@ public class StudentController {
 		return s;
 	}
 	
+	@RequestMapping(value="/studentPrototype.do")
+	public @ResponseBody Student getStuPrototype(){
+		Student s  = new Student();	
+		return s;
+	}
+	
 	@RequestMapping(value="/addStudent.do")
-	public void addStudent(Student student,HttpServletResponse response){
-		String res = "error";
-		PrintWriter writer = null;
-		if(student!=null) {
-			if(studentService.addStudent(student))
-				res = "success";
-		}
-		try {
-			writer = response.getWriter();
-			writer.write(res);
-			writer.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			writer.close();			
-		}		
-		System.out.println("[增加操作]:增加学生:"+res);		
+	public String addStudent(Student student,HttpServletRequest request)throws IOException{
+		System.out.println(student);
+		if(student==null)
+			return "redirect:home.html";	
+				//保存数据库的路径
+				String sqlPath = null; 
+				//定义文件保存的本地路径
+			    String localPath = "/Users/yejincheng/Downloads/tomcatVirtualHome/";
+			    //定义 文件名
+			    String filename=null; 
+			    if(!student.getPicture().isEmpty()){ 
+			        String uuid = UUID.randomUUID().toString().replaceAll("-","");  
+			        String contentType=student.getPicture().getContentType();  
+			        String suffixName=contentType.substring(contentType.indexOf("/")+1);
+			        filename=uuid+"."+suffixName; 
+			        System.out.println(filename);
+			        //文件保存路径
+			        student.getPicture().transferTo(new File(localPath+filename)); 
+			    }
+				  sqlPath = "/images/"+filename;
+			      System.out.println(sqlPath);
+			      student.setImage(sqlPath);
+			      System.out.println(student);
+			      boolean b = studentService.addStudent(student);
+			      System.out.println("[add操作]:add学生:"+b);		
+			      return "redirect:home.html";	
 	}
 		
 	
@@ -66,7 +88,6 @@ public class StudentController {
 		String sqlPath = null; 
 		
 		//定义文件保存的本地路径
-	    //String localPath="D:\\File\\";
 	    String localPath = "/Users/yejincheng/Downloads/tomcatVirtualHome/";
 	    //定义 文件名
 	    String filename=null; 
