@@ -39,6 +39,7 @@ public interface IStudentService {
 	 */
 	public Student getStudentById(int id);
 	
+	
 	/**
 	 * 根据id或者name查询学生
 	 * @param idOrName
