@@ -51,6 +51,7 @@ console.log("out add()..")
 
 <script type="text/javascript">
 	function loadSearchResult(){
+		window.event.returnValue = false
 		 var form = new FormData(document.getElementById("searchStu"));
             $.ajax({
                 url:"likeStudent.do",

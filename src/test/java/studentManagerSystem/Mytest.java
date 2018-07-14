@@ -25,6 +25,7 @@ public class Mytest extends AbstractJUnit4SpringContextTests{
 	
 	@Test
 	public void t1() throws Exception {
+
 		List<Student> allStudents = studentService.getAllStudents();
 		for (Student s : allStudents) {
 			System.out.println(s);

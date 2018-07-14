@@ -33,7 +33,7 @@ public interface IStudentService {
 	 */
 	
 	
-	public boolean removeStudentById(int id);
+	public Student removeStudentById(int id);
 	/**
 	 * 通过id获取一个学生信息 
 	 */

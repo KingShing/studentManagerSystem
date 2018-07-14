@@ -12,6 +12,7 @@
 	   		SELECT * FROM student
 	   	</select>
 	   	
+	   	
 	   	<insert id="addStudent" parameterType="Student">
 	   		INSERT student(id,name,age,address,sex,image) VALUE (#{id},#{name},#{age},#{address},#{sex},#{image})
 	   	</insert>
@@ -30,6 +31,13 @@
 	   	<select id="getStudentsByName" parameterType="string" resultType="Student">
 	   		SELECT * FROM student WHERE name = #{name}
 	   	</select>
+	   	
+	   	<select id="getUser" parameterType="ConditionUser" resultType="Student">
+	        SELECT * FROM student WHERE age &gt;= #{minAge} AND age &lt;= #{maxAge}
+	        <if test="name!=null">
+	            AND name LIKE CONCAT(CONCAT('%',#{name}),'%')
+	        </if>
+   	  </select>
 	   	
 	   	
    </mapper>

@@ -20,6 +20,22 @@ public class Student implements Serializable {
 	private String sex;
 	private String image;//头像路径
 	private MultipartFile picture;  
+	//private String favorite;
+	
+//	public String getFavorite() {
+//		return favorite;
+//	}
+//
+//
+//
+//
+//	public void setFavorite(String favorite) {
+//		this.favorite = favorite;
+//	}
+
+
+
+
 	public String getImage() {
 		return image;
 	}
@@ -51,11 +67,15 @@ public class Student implements Serializable {
 
 
 
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", address=" + address + ", age=" + age + ", sex=" + sex
-				+ ", image=" + image + ", picture=" + picture + "]";
-	}
+	
+
+
+
+//	@Override
+//	public String toString() {
+//		return "Student [id=" + id + ", name=" + name + ", address=" + address + ", age=" + age + ", sex=" + sex
+//				+ ", image=" + image + ", picture=" + picture + ", favorite=" + favorite + "]";
+//	}
 
 
 

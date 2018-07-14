@@ -1,11 +1,9 @@
 package controller;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,9 @@ import service.IStudentService;
 
 @Controller
 public class StudentController {
+	
+	public  static final String LOCAL_PATH = "/Users/yejincheng/Downloads/tomcatVirtualHome/";
+	public  static final String TOMCAT_PATH = "/images/";
 	
 	@Autowired
 	private IStudentService studentService;
@@ -59,7 +60,7 @@ public class StudentController {
 				//保存数据库的路径
 				String sqlPath = null; 
 				//定义文件保存的本地路径
-			    String localPath = "/Users/yejincheng/Downloads/tomcatVirtualHome/";
+			    String localPath = LOCAL_PATH;//"/Users/yejincheng/Downloads/tomcatVirtualHome/";
 			    //定义 文件名
 			    String filename=null; 
 			    if(!student.getPicture().isEmpty()){ 
@@ -71,7 +72,7 @@ public class StudentController {
 			        //文件保存路径
 			        student.getPicture().transferTo(new File(localPath+filename)); 
 			    }
-				  sqlPath = "/images/"+filename;
+				  sqlPath = TOMCAT_PATH+filename;
 			      System.out.println(sqlPath);
 			      student.setImage(sqlPath);
 			      System.out.println(student);
@@ -88,7 +89,7 @@ public class StudentController {
 		String sqlPath = null; 
 		
 		//定义文件保存的本地路径
-	    String localPath = "/Users/yejincheng/Downloads/tomcatVirtualHome/";
+	    String localPath = LOCAL_PATH;
 	    //定义 文件名
 	    String filename=null; 
 	    if(!student.getPicture().isEmpty()){ 
@@ -105,7 +106,7 @@ public class StudentController {
 	        student.getPicture().transferTo(new File(localPath+filename)); 
 	    }
 	
-		  sqlPath = "/images/"+filename;
+		  sqlPath =TOMCAT_PATH+filename;
 	      System.out.println(sqlPath);
 	      student.setImage(sqlPath);
 	      System.out.println(student);
@@ -118,23 +119,21 @@ public class StudentController {
 	
 	
 	@RequestMapping(value="/delStudent.do")
-	public  void deleteStu(String id,HttpServletResponse response){
-		String res = "error";
-		PrintWriter writer = null;
+	public  String deleteStu(String id){
+		Student targetStudent = null ;
 		if(StringUtils.isNumeric(id)) {
-			if(studentService.removeStudentById(Integer.parseInt(id)))
-				res = "success";
-		}
-		try {
-			writer = response.getWriter();
-			writer.write(res);
-			writer.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			writer.close();			
-		}		
-		System.out.println("[删除操作]:删除id为"+id+"的学生:"+res);		
+			targetStudent = studentService.removeStudentById(Integer.parseInt(id));
+			
+			String vPath = targetStudent.getImage();
+			String fileName = vPath.substring(vPath.lastIndexOf("/")+1);
+			File targetFile = new File(LOCAL_PATH, fileName);
+			System.out.println("deleteFile: "+targetFile.getName());
+			if (targetFile.exists()) 
+				targetFile.delete();
+			}
+
+		System.out.println("[删除操作]:删除id为"+id+"的学生");	
+		return "redirect:home.html";
 	}
 	
 }

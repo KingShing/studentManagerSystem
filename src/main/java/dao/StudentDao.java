@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import pojo.Student;
+import pojo.conditionQuery.ConditionStudent;
 
 public interface StudentDao {
 	
@@ -50,5 +51,10 @@ public interface StudentDao {
 	 */
 	public List<Student> getStudentsByName(String Name);
 		
-	
+	/**
+	 *  ConditionStudent 条件查询
+	 * @param conditionStudent
+	 * @return
+	 */
+	public List<Student> getStudentsByCondition(ConditionStudent conditionStudent);
 }

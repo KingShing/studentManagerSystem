@@ -38,10 +38,11 @@ public class StudentServiceImpl implements IStudentService{
 			return false;//存在 -->false
 	}
 	@Override
-	public boolean removeStudentById(int id) {
-		if(studentDao.getStudentById(id)==null) 
-			return false; //找不到学生,无法删除,-->false
-		return studentDao.removeStudentById(id); 
+	public Student removeStudentById(int id) {
+		Student s  = studentDao.getStudentById(id);
+		if(s!=null) 
+			studentDao.removeStudentById(id); 
+		return s ;
 	}
 	
 	
